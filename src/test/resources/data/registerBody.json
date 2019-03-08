@@ -1,0 +1,16 @@
+{
+"login": {
+    "email": "peter@klaven",
+    "password": "cityslicka"
+},
+
+"register": {
+	"email": "sydney@fife",
+	"password": "pistol"
+},
+
+"unsuccessful": {
+	"password": "pistol"
+}
+
+}

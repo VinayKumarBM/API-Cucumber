@@ -1,0 +1,40 @@
+{
+"book": {
+      "title": "Game of Throne",
+      "body": "Here will be description of the Book",
+      "userId": "911"
+    },
+
+"user": {
+    "name": "Frank Lampard",
+    "job": "Football Manager"
+},
+
+"createPerson": [{
+    "name": "Test",
+    "surname": "Singh",
+    "address": {
+     "city":"testCity",
+     "state":"testState",
+     "zipcode":"560078",
+     "landmark":"testlandmark"
+    }
+}],
+
+"createStudent": [  
+   {  
+      "studentname":"test1",
+      "address":{  
+         "state":"testState",
+         "city":"testCity",
+         "location":"testlocation",
+         "zipcode":"560078"
+      },
+      "parentsDeatils":{  
+         "fatherName":"testfatherName",
+         "profession":"testBusiness",
+         "earning":"100",
+         "companyName":"testCompany"
+      }
+   }]
+}

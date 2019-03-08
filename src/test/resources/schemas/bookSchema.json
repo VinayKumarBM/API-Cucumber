@@ -1,0 +1,54 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://example.com/root.json",
+  "type": "object",
+  "title": "The Root Schema",
+  "required": [
+    "title",
+    "body",
+    "userId",
+    "id"
+  ],
+  "properties": {
+    "title": {
+      "$id": "#/properties/title",
+      "type": "string",
+      "title": "The Title Schema",
+      "default": "",
+      "examples": [
+        "Game of Throne"
+      ],
+      "pattern": "^(.*)$"
+    },
+    "body": {
+      "$id": "#/properties/body",
+      "type": "string",
+      "title": "The Body Schema",
+      "default": "",
+      "examples": [
+        "Here will be description of the Book"
+      ],
+      "pattern": "^(.*)$"
+    },
+    "userId": {
+      "$id": "#/properties/userId",
+      "type": "string",
+      "title": "The Userid Schema",
+      "default": "",
+      "examples": [
+        "911"
+      ],
+      "pattern": "^(.*)$"
+    },
+    "id": {
+      "$id": "#/properties/id",
+      "type": "integer",
+      "title": "The Id Schema",
+      "default": 0,
+      "examples": [
+        101
+      ]
+    }
+  }
+}
