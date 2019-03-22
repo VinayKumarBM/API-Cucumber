@@ -1,25 +1,35 @@
 @testAPI
 Feature: This is to test API
 
-  @testAPIDataTable
-  Scenario: Test Post Call from DataTable
-    Given user has access to api "/api/users"
+  @testAPIDataTable1
+  Scenario: Test Post Call to create user from DataTable
+    Given user has access to api "https://reqres.in/api/users"
     When user makes a post call 
       |name		|job	| 
       |Sachin	|Tester | 
     Then user validates that response code is "201"
-    And user validates the name & job from response 
+    And user validates the name & job from response
+    And user validates the JSON schema with userSchema.json
+    
+  @testAPIDataTable2
+  Scenario: Test Post Call to add book from DataTable
+    Given user has access to api "https://jsonplaceholder.typicode.com/posts"
+    When user makes a post call 
+      |title				|body						|userId	| 
+      |title of the book	|Body of the book goes here |095456	| 
+    Then user validates that response code is "201"
+    And user validates the JSON schema with bookSchema.json  
 
-	@testAPIExcel
+  @testAPIExcel
   Scenario Outline: Test Post Call from Excel file
     Given user has access to api uri <apiURIKey>
     When user makes a post call with body data from Excel 
     Then user gets the response code <responseCode>
-    And user validates the JSON schema with <JSONSchema>
+    And user validates the JSON schema from Excel
     Examples:
-    |apiURIKey		|JSONSchema				|responseCode	|
-    |addBookDetail	|bookSchema.json		|201			|
-    |createUser		|userSchema.json		|201			|
+    |apiURIKey		|responseCode	|
+    |addBookDetail	|201			|
+    |createUser		|201			|
 	
 	@testAPIJSON
   Scenario: Test Post Call from JSON file for register success

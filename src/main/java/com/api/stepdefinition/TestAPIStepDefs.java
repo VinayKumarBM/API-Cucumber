@@ -37,7 +37,7 @@ public class TestAPIStepDefs {
 	private List<Map<String, String>> dataTableMap;
 	private static StringWriter requestWriter,responseWriter;
 	private static PrintStream requestCapture,responseCapture;
-	private static final String baseUri = "https://reqres.in";
+	//private static final String baseUri = "https://reqres.in";
 	private static String endpointUri;
 
 	@Before
@@ -60,10 +60,10 @@ public class TestAPIStepDefs {
 	}
 
 	@Given("^user has access to api \"(.*)\"$")
-	public void user_has_access_to_api(String basePath) {
+	public void user_has_access_to_api(String endPoint) {
 		//RestAssured.baseURI = "https://reqres.in";
 		//RestAssured.basePath = "https://reqres.in"
-		endpointUri = baseUri+basePath;
+		endpointUri = endPoint;
 	}
 
 	@When("^user makes a post call$")
@@ -96,6 +96,12 @@ public class TestAPIStepDefs {
 		System.out.println("Successfully validated the response.");
 	}
 
+	@Then("^user validates the JSON schema with (.*)$")
+	public void user_validates_the_JSON_schema_with(String responseJSON) {
+		response.then().assertThat().body(JsonSchemaValidator.matchesJsonSchemaInClasspath("schemas/"+responseJSON));
+		System.out.println("Successfully Validated schema from "+responseJSON);
+	}
+	
 	@When("^user makes a post call with JSON body from \"(.*)\" with key \"(.*)\"$")
 	public void user_makes_a_post_call_with_JSON_body_from_key(String JSONfileName, String jsonKey) {
 		request = requestSetup();
@@ -123,11 +129,11 @@ public class TestAPIStepDefs {
 	public void user_gets_the_response_code(String responseCode) {
 		Assert.assertEquals("Response code did not match", Integer.parseInt(responseCode), response.getStatusCode());
 	}
-
-	@Then("^user validates the JSON schema with (.*)$")
-	public void user_validates_the_JSON_schema_with(String responseJSON) {
-		response.then().assertThat().body(JsonSchemaValidator.matchesJsonSchemaInClasspath("schemas/"+responseJSON));
-		System.out.println("Successfully Validated schema from "+responseJSON);
+	
+	@Then("^user validates the JSON schema from Excel$")
+	public void user_validates_the_JSON_schema_from_Excel() {
+		response.then().assertThat().body(JsonSchemaValidator.matchesJsonSchema(excelDataMap.get("responseSchema")));
+		System.out.println("Successfully Validated schema from Excel ==>\n"+excelDataMap.get("responseSchema"));
 	}
 
 	@Given("^user has access to uri \"(.*)\"$")

@@ -111,7 +111,7 @@ public class ExcelUtils {
 
 	public static void main(String []args) {
 		Map<String,String> dataMap = new HashMap<String, String>();
-		dataMap = getData("postAuthors");
+		dataMap = getData("createUser");
 		for(Map.Entry<String, String> data: dataMap.entrySet()) {
 			System.out.println(data.getKey()+ " ==> " + data.getValue());
 		}
