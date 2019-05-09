@@ -33,19 +33,19 @@ Feature: This is to test API
 	
 	@testAPIJSON
   Scenario: Test Post Call from JSON file for register success
-    Given user has access to api "/api/register"
+    Given user has access to api "https://reqres.in/api/register"
     When user makes a post call with JSON body from "registerBody.json" with key "register"
-    Then user validates that response code is "201"   
+    Then user validates that response code is "200"   
     
   @testAPIJSON
   Scenario: Test Post Call from JSON file for login success
-    Given user has access to api "/api/login"
+    Given user has access to api "https://reqres.in/api/login"
     When user makes a post call with JSON body from "registerBody.json" with key "login"
     Then user validates that response code is "200"
     
    @testAPIJSON
   Scenario: Test Post Call from JSON file for REGISTER - UNSUCCESSFUL
-    Given user has access to api "/api/register"
+    Given user has access to api "https://reqres.in/api/register"
     When user makes a post call with JSON body from "registerBody.json" with key "unsuccessful"
     Then user validates that response code is "400"
     
