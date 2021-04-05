@@ -96,10 +96,13 @@ public class ExcelUtils {
 			int columnCount = excelSheet.getRow(dataRow).getLastCellNum();
 			for(int i=0;i<columnCount;i++) {
 				cell = excelSheet.getRow(dataRow).getCell(i);
-				if(cell.getCellType() == XSSFCell.CELL_TYPE_NUMERIC) {
-					cell.setCellType(XSSFCell.CELL_TYPE_STRING);
+				String cellData = null; 
+				if (cell != null) {
+					if(cell.getCellType() == XSSFCell.CELL_TYPE_NUMERIC) {
+						cell.setCellType(XSSFCell.CELL_TYPE_STRING);
+					}
+					cellData = cell.getStringCellValue();
 				}
-				String cellData = cell.getStringCellValue();
 				dataMap.put(excelSheet.getRow(0).getCell(i).getStringCellValue(), cellData);
 			}
 		}catch (Exception e) {

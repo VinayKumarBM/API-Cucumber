@@ -1,0 +1,46 @@
+{
+	"createBooking1": {
+		"firstname": "Sherlock",
+		"lastname": "Holmes",
+		"totalprice": "2500",
+		"depositpaid": "true",
+		"bookingdates": {
+		"checkin":"2021-05-15",
+		"checkout":"2021-06-02"
+		},
+		"additionalneeds":"Snacks"
+	},
+	"createBooking2": {
+		"firstname": "James",
+		"lastname": "Bond",
+		"totalprice": "70007",
+		"depositpaid": "false",
+		"bookingdates": {
+		"checkin":"2020-11-10",
+		"checkout":"2020-11-20"
+		},
+		"additionalneeds":"High Tea"
+	},
+	"updateBooking1": {
+		"firstname": "Clark",
+		"lastname": "Kent",
+		"totalprice": "12321",
+		"depositpaid": "true",
+		"bookingdates": {
+		"checkin":"2021-11-10",
+		"checkout":"2021-11-20"
+		},
+		"additionalneeds":"Super Tea"
+	},
+	"updateBooking2": {
+		"firstname": "Bruce",
+		"lastname": "Wayne",
+		"totalprice": "35007",
+		"depositpaid": "false",
+		"bookingdates": {
+		"checkin":"2021-09-10",
+		"checkout":"2021-10-20"
+		},
+		"additionalneeds":"Bat Dish"
+	}
+}
