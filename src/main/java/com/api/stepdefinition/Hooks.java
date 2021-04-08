@@ -1,14 +1,14 @@
 package com.api.stepdefinition;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
-import cucumber.api.Scenario;
-import cucumber.api.java.Before;
+import io.cucumber.java.Before;
+import io.cucumber.java.Scenario;
 
 public class Hooks {
 
-	private static final Logger LOG = LoggerFactory.getLogger(Hooks.class);
+	private static final Logger LOG = LogManager.getLogger(Hooks.class);
 	
 	@Before
 	public void testStart(Scenario scenario) {

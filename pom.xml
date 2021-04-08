@@ -13,51 +13,39 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<cucumber.version>4.2.0</cucumber.version>
+		<cucumber.version>6.9.1</cucumber.version>
 		<logger.version>2.0.0-alpha1</logger.version>
 	</properties>
 
 	<dependencies>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.13.1</version>
-		</dependency>
 		<!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-java -->
 		<dependency>
 			<groupId>io.cucumber</groupId>
 			<artifactId>cucumber-java</artifactId>
-			<version>4.2.6</version>
+			<version>${cucumber.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>io.cucumber</groupId>
 			<artifactId>cucumber-core</artifactId>
-			<version>4.2.6</version>
+			<version>${cucumber.version}</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-junit -->
 		<dependency>
 			<groupId>io.cucumber</groupId>
 			<artifactId>cucumber-junit</artifactId>
-			<version>4.2.6</version>
+			<version>${cucumber.version}</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-picocontainer -->
 		<dependency>
 			<groupId>io.cucumber</groupId>
 			<artifactId>cucumber-picocontainer</artifactId>
-			<version>4.2.6</version>
+			<version>${cucumber.version}</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-jvm-deps -->
 		<dependency>
 			<groupId>io.cucumber</groupId>
 			<artifactId>cucumber-jvm-deps</artifactId>
 			<version>1.0.6</version>
-			<scope>provided</scope>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/net.masterthought/cucumber-reporting -->
-		<dependency>
-			<groupId>net.masterthought</groupId>
-			<artifactId>cucumber-reporting</artifactId>
-			<version>4.3.0</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/io.cucumber/gherkin -->
 		<dependency>
@@ -134,6 +122,11 @@
 			<artifactId>slf4j-log4j12</artifactId>
 			<version>${logger.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>tech.grasshopper</groupId>
+			<artifactId>extentreports-cucumber6-adapter</artifactId>
+			<version>2.7.0</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
@@ -145,12 +138,12 @@
 					<execution>
 						<phase>test</phase>
 						<configuration>
-							<parallel>methods</parallel>
-							<threadCount>2</threadCount>
 							<includes>
 								<include>com.api.test.TestRunner.java</include>
 							</includes>
 							<outputDirectory>${basedir}/target/surefire-reports</outputDirectory>
+							<skipTests>true</skipTests>
+							<testFailureIgnore>true</testFailureIgnore>
 						</configuration>
 					</execution>
 				</executions>

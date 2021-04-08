@@ -2,7 +2,7 @@ package com.api.stepdefinition;
 
 import com.api.utils.TestContext;
 
-import cucumber.api.java.en.When;
+import io.cucumber.java.en.When;
 
 public class DeleteBookingStepdefinition {
 	private TestContext context;

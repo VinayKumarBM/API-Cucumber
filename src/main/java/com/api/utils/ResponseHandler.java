@@ -2,7 +2,8 @@ package com.api.utils;
 
 import java.io.IOException;
 
-import io.cucumber.datatable.dependency.com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import io.restassured.response.Response;
 
 public class ResponseHandler {

@@ -2,26 +2,25 @@ package com.api.stepdefinition;
 
 import static org.junit.Assert.*;
 
-import java.io.IOException;
 import java.util.Map;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.json.JSONObject;
 
-import com.api.model.BookingDTO;
 import com.api.model.BookingDetailsDTO;
 import com.api.utils.ExcelUtils;
 import com.api.utils.JsonReader;
 import com.api.utils.ResponseHandler;
 import com.api.utils.TestContext;
 
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
+import io.cucumber.java.en.When;
 import io.cucumber.datatable.DataTable;
-import io.restassured.module.jsv.JsonSchemaValidator;
 
 public class UpdateBookingStepdefinition {
 	private TestContext context;
-
+	private static final Logger LOG = LogManager.getLogger(UpdateBookingStepdefinition.class);
+	
 	public UpdateBookingStepdefinition(TestContext context) {
 		this.context = context;
 	}
@@ -34,7 +33,7 @@ public class UpdateBookingStepdefinition {
 		context.response = context.requestSetup().body(credentials.toString())
 				.when().post(context.session.get("endpoint").toString());
 		String token = context.response.path("token");
-		System.out.println("Auth Token: "+token);
+		LOG.info("Auth Token: "+token);
 		context.session.put("token", "token="+token);	
 	}
 
@@ -63,7 +62,7 @@ public class UpdateBookingStepdefinition {
 	}
 	
 	@When("user updates the booking details using data {string} from Excel")
-	public void userUpdatesTheBookingDetailsUsingDataFromExcel(String dataKey) {
+	public void userUpdatesTheBookingDetailsUsingDataFromExcel(String dataKey) throws Exception {
 		Map<String,String> excelDataMap = ExcelUtils.getData(dataKey);
 		context.response = context.requestSetup()
 				.header("Cookie", context.session.get("token").toString())

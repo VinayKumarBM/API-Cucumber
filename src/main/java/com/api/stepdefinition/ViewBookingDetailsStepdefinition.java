@@ -2,19 +2,21 @@ package com.api.stepdefinition;
 
 import static org.junit.Assert.*;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 import com.api.model.BookingDetailsDTO;
 import com.api.model.BookingID;
 import com.api.utils.ResponseHandler;
 import com.api.utils.TestContext;
 
-import cucumber.api.java.en.Given;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
+import io.cucumber.java.en.*;
 import io.restassured.module.jsv.JsonSchemaValidator;
 
 public class ViewBookingDetailsStepdefinition {
 	private TestContext context;
-
+	private static final Logger LOG = LogManager.getLogger(ViewBookingDetailsStepdefinition.class);
+	
 	public ViewBookingDetailsStepdefinition(TestContext context) {
 		this.context = context;
 	}
@@ -28,7 +30,7 @@ public class ViewBookingDetailsStepdefinition {
 	public void userMakesARequestToViewBookingIDs() {
 		context.response = context.requestSetup().when().get(context.session.get("endpoint").toString());
 		int bookingID = context.response.getBody().jsonPath().getInt("[0].bookingid");
-		System.out.println("Booking ID: "+bookingID);
+		LOG.info("Booking ID: "+bookingID);
 		assertNotNull("Booking ID not found!", bookingID);
 		context.session.put("bookingID", bookingID);
 	}
@@ -46,7 +48,7 @@ public class ViewBookingDetailsStepdefinition {
 
 	@Then("user makes a request to view details of a booking ID")
 	public void userMakesARequestToViewDetailsOfBookingID() {
-		System.out.println("Session BookingID: "+context.session.get("bookingID"));
+		LOG.info("Session BookingID: "+context.session.get("bookingID"));
 		context.response = context.requestSetup().pathParam("bookingID", context.session.get("bookingID"))
 				.when().get(context.session.get("endpoint")+"/{bookingID}");
 		BookingDetailsDTO bookingDetails = ResponseHandler.deserializedResponse(context.response, BookingDetailsDTO.class);
@@ -64,8 +66,8 @@ public class ViewBookingDetailsStepdefinition {
 
 	@Then("user makes a request to view all the booking IDs of that user name")
 	public void userMakesARequestToViewBookingIDByUserName() {
-		System.out.println("Session firstname: "+context.session.get("firstname"));
-		System.out.println("Session lastname: "+context.session.get("lastname"));
+		LOG.info("Session firstname: "+context.session.get("firstname"));
+		LOG.info("Session lastname: "+context.session.get("lastname"));
 		context.response = context.requestSetup()
 				.queryParams("firstname", context.session.get("firstname"), "lastname", context.session.get("lastname"))
 				.when().get(context.session.get("endpoint").toString());	
@@ -76,7 +78,7 @@ public class ViewBookingDetailsStepdefinition {
 	@Then("user validates the response with JSON schema {string}")
 	public void userValidatesResponseWithJSONSchema(String schemaFileName) {
 		context.response.then().assertThat().body(JsonSchemaValidator.matchesJsonSchemaInClasspath("schemas/"+schemaFileName));
-		System.out.println("Successfully Validated schema from "+schemaFileName);
+		LOG.info("Successfully Validated schema from "+schemaFileName);
 	}
 	
 	@When("user makes a request to check the health of booking service")

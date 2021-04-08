@@ -2,14 +2,15 @@ package com.api.test;
 
 import org.junit.runner.RunWith;
 
-import cucumber.api.CucumberOptions;
-import cucumber.api.SnippetType;
-import cucumber.api.junit.Cucumber;
+import io.cucumber.junit.Cucumber;
+import io.cucumber.junit.CucumberOptions;
+import io.cucumber.junit.CucumberOptions.SnippetType;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-		plugin = {"pretty:target/cucumber/cucumber.txt", 
-				"html:target/cucumber/report",
+		plugin = {"pretty:target/cucumber/cucumber.txt",
+				"com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:",
+				//"html:target/cucumber/report",
 				"json:target/cucumber/cucumber.json",
 				"com.api.utils.MyTestListener"
 		}
@@ -17,8 +18,9 @@ import cucumber.api.junit.Cucumber;
 		,glue = {"com.api.stepdefinition"}
 		//,dryRun = true
 		,monochrome = true
-		,snippets = SnippetType.CAMELCASE		
-		,tags= {"@deleteBookingIDs"}
+		,snippets = SnippetType.CAMELCASE
+		,tags = "@bookerAPI"
+		//,publish = true
 		)
 public class TestRunner {
 

@@ -19,12 +19,12 @@ public class TestContext {
 	
 	public RequestSpecification requestSetup() {	
 		RestAssured.reset();
-		Options options = Options.builder().logStacktrace().printSingleliner().build();
+		Options options = Options.builder().logStacktrace().build();
 		RestAssuredConfig config = CurlRestAssuredConfigFactory.createConfig(options); 
 		RestAssured.baseURI = "https://restful-booker.herokuapp.com";		
 		return RestAssured.given()
-				.filter(new RestAssuredRequestFilter())
 				.config(config)
+				.filter(new RestAssuredRequestFilter())				
 				.contentType(CONTENT_TYPE)
 				.accept(CONTENT_TYPE);
 	} 

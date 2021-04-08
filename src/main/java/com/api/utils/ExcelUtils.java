@@ -2,9 +2,12 @@ package com.api.utils;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -17,57 +20,40 @@ public class ExcelUtils {
 	private static XSSFRow row;
 	private static String sheetPath = System.getProperty("user.dir") + "/src/test/resources/data/testData.xlsx";
 	private static String sheetName = "testData";
+	private static final Logger LOG = LogManager.getLogger(ExcelUtils.class);
 
-	private static void setExcelFile() throws Exception {
-		try{
-			System.out.println("Getting sheets from the workbook.");
+	private static void setExcelFile() throws IOException {
+			LOG.info("Getting sheets from the workbook.");
 			FileInputStream excelFile = new FileInputStream(sheetPath);
 			excelWorkbook = new XSSFWorkbook(excelFile);
 			excelSheet = excelWorkbook.getSheet(sheetName);
-		}catch(Exception exp){
-			System.out.println("Exception occured in setExcelFile: "+exp.getMessage());
-			throw(exp);
-		}
 	}
 
-	private static int getDataRow(String dataKey, int dataColumn) throws Exception{
-		int row;
-		try{
-			int rowCount = excelSheet.getLastRowNum();
-			for(row=0; row< rowCount; row++){
-				if(ExcelUtils.getCellData(row, dataColumn).equalsIgnoreCase(dataKey)){
-					System.out.println("Test Data Found in Row: "+row);
-					break;
-				}
+	private static int getDataRow(String dataKey, int dataColumn) {
+		int rowCount = excelSheet.getLastRowNum();
+		for(int row=0; row<= rowCount; row++){
+			if(ExcelUtils.getCellData(row, dataColumn).equalsIgnoreCase(dataKey)){
+				return row;
 			}
 		}
-		catch(Exception exp){
-			System.out.println("Exception occured in getTestCaseRow: "+exp.getMessage());
-			throw(exp);
-		}
-		return row;
+		return 0;		
 	}
 
-	private static String getCellData(int rowNumb, int colNumb) throws Exception{
-		try{
-			cell = excelSheet.getRow(rowNumb).getCell(colNumb);
-			//System.out.println("Getting cell data.");
-			if(cell.getCellType() == XSSFCell.CELL_TYPE_NUMERIC) {
-				cell.setCellType(XSSFCell.CELL_TYPE_STRING);
-			}
-			String cellData = cell.getStringCellValue();
-			return cellData;
+	private static String getCellData(int rowNumb, int colNumb) {
+		cell = excelSheet.getRow(rowNumb).getCell(colNumb);
+		//LOG.info("Getting cell data.");
+		if(cell.getCellType() == XSSFCell.CELL_TYPE_NUMERIC) {
+			cell.setCellType(XSSFCell.CELL_TYPE_STRING);
 		}
-		catch(Exception exp){
-			return "";
-		}
+		String cellData = cell.getStringCellValue();
+		return cellData;
 	}
 
 	public static void setCellData(String result, int rowNumb, int colNumb, String sheetPath,String sheetName) throws Exception{
 		try{
 			row = excelSheet.getRow(rowNumb);
 			cell = row.getCell(colNumb);
-			System.out.println("Setting results into the excel sheet.");
+			LOG.info("Setting results into the excel sheet.");
 			if(cell==null){
 				cell = row.createCell(colNumb);
 				cell.setCellValue(result);
@@ -76,23 +62,25 @@ public class ExcelUtils {
 				cell.setCellValue(result);
 			}
 
-			System.out.println("Creating file output stream.");
+			LOG.info("Creating file output stream.");
 			FileOutputStream fileOut = new FileOutputStream(sheetPath + sheetName);
 			excelWorkbook.write(fileOut);
 			fileOut.flush();
 			fileOut.close();
 
 		}catch(Exception exp){
-			System.out.println("Exception occured in setCellData: "+exp.getMessage());
-			throw (exp);
+			LOG.info("Exception occured in setCellData: "+exp);
 		}
 	}
 
-	public static Map getData(String dataKey) {
+	public static Map getData(String dataKey) throws Exception {
 		Map dataMap = new HashMap<String, String>();
-		try {
 			setExcelFile();
 			int dataRow = getDataRow(dataKey.trim(), 0);
+			LOG.info("Test Data Found in Row: "+dataRow);
+			if (dataRow == 0) {
+				throw new Exception("No Data FOUND for dataKey: "+dataKey);
+			}
 			int columnCount = excelSheet.getRow(dataRow).getLastCellNum();
 			for(int i=0;i<columnCount;i++) {
 				cell = excelSheet.getRow(dataRow).getCell(i);
@@ -105,18 +93,14 @@ public class ExcelUtils {
 				}
 				dataMap.put(excelSheet.getRow(0).getCell(i).getStringCellValue(), cellData);
 			}
-		}catch (Exception e) {
-			System.out.println("Exeception Occured while adding data to Map:\n");
-			e.printStackTrace();
-		}
 		return dataMap;
 	}
 
-	public static void main(String []args) {
+	public static void main(String []args) throws Exception {
 		Map<String,String> dataMap = new HashMap<String, String>();
-		dataMap = getData("createUser");
+		dataMap = getData("updateBooking2");
 		for(Map.Entry<String, String> data: dataMap.entrySet()) {
-			System.out.println(data.getKey()+ " ==> " + data.getValue());
+			LOG.info(data.getKey()+ " ==> " + data.getValue());
 		}
 	}
 }
