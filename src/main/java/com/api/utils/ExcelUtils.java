@@ -1,5 +1,6 @@
 package com.api.utils;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -18,13 +19,13 @@ public class ExcelUtils {
 	private static XSSFWorkbook excelWorkbook;
 	private static XSSFCell cell;
 	private static XSSFRow row;
-	private static String sheetPath = System.getProperty("user.dir") + "/src/test/resources/data/testData.xlsx";
-	private static String sheetName = "testData";
+	private static String sheetPath = PropertiesFile.getProperty("test.data.path")+PropertiesFile.getProperty("excel.name");
+	private static String sheetName = PropertiesFile.getProperty("sheet.name");
 	private static final Logger LOG = LogManager.getLogger(ExcelUtils.class);
 
 	private static void setExcelFile() throws IOException {
 			LOG.info("Getting sheets from the workbook.");
-			FileInputStream excelFile = new FileInputStream(sheetPath);
+			FileInputStream excelFile = new FileInputStream(new File(sheetPath).getAbsolutePath());
 			excelWorkbook = new XSSFWorkbook(excelFile);
 			excelSheet = excelWorkbook.getSheet(sheetName);
 	}
@@ -79,7 +80,7 @@ public class ExcelUtils {
 			int dataRow = getDataRow(dataKey.trim(), 0);
 			LOG.info("Test Data Found in Row: "+dataRow);
 			if (dataRow == 0) {
-				throw new Exception("No Data FOUND for dataKey: "+dataKey);
+				throw new Exception("NO DATA FOUND for dataKey: "+dataKey);
 			}
 			int columnCount = excelSheet.getRow(dataRow).getLastCellNum();
 			for(int i=0;i<columnCount;i++) {
@@ -98,7 +99,7 @@ public class ExcelUtils {
 
 	public static void main(String []args) throws Exception {
 		Map<String,String> dataMap = new HashMap<String, String>();
-		dataMap = getData("updateBooking2");
+		dataMap = getData("updateBooking21");
 		for(Map.Entry<String, String> data: dataMap.entrySet()) {
 			LOG.info(data.getKey()+ " ==> " + data.getValue());
 		}

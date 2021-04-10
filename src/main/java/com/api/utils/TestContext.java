@@ -21,7 +21,7 @@ public class TestContext {
 		RestAssured.reset();
 		Options options = Options.builder().logStacktrace().build();
 		RestAssuredConfig config = CurlRestAssuredConfigFactory.createConfig(options); 
-		RestAssured.baseURI = "https://restful-booker.herokuapp.com";		
+		RestAssured.baseURI = PropertiesFile.getProperty("baseURL");	
 		return RestAssured.given()
 				.config(config)
 				.filter(new RestAssuredRequestFilter())				
