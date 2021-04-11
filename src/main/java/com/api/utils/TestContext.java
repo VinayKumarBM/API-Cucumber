@@ -15,7 +15,7 @@ public class TestContext {
 		
 	public Response response;
 	public Map<String, Object> session = new HashMap<String, Object>();
-	private static final String CONTENT_TYPE = "application/json";
+	private static final String CONTENT_TYPE = PropertiesFile.getProperty("content.type");
 	
 	public RequestSpecification requestSetup() {	
 		RestAssured.reset();
