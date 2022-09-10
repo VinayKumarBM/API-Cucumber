@@ -9,6 +9,7 @@ import java.util.Map;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -43,8 +44,8 @@ public class ExcelUtils {
 	private static String getCellData(int rowNumb, int colNumb) {
 		cell = excelSheet.getRow(rowNumb).getCell(colNumb);
 		//LOG.info("Getting cell data.");
-		if(cell.getCellType() == XSSFCell.CELL_TYPE_NUMERIC) {
-			cell.setCellType(XSSFCell.CELL_TYPE_STRING);
+		if(cell.getCellType() == CellType.NUMERIC) {
+			cell.setCellType(CellType.STRING);
 		}
 		String cellData = cell.getStringCellValue();
 		return cellData;
@@ -87,8 +88,8 @@ public class ExcelUtils {
 				cell = excelSheet.getRow(dataRow).getCell(i);
 				String cellData = null; 
 				if (cell != null) {
-					if(cell.getCellType() == XSSFCell.CELL_TYPE_NUMERIC) {
-						cell.setCellType(XSSFCell.CELL_TYPE_STRING);
+					if(cell.getCellType() == CellType.NUMERIC) {
+						cell.setCellType(CellType.STRING);
 					}
 					cellData = cell.getStringCellValue();
 				}
