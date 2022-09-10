@@ -144,7 +144,6 @@
 							<includes>
 								<include>com.api.test.TestRunner.java</include>
 							</includes>
-							<outputDirectory>${basedir}/target/surefire-reports</outputDirectory>
 							<skipTests>true</skipTests>
 							<testFailureIgnore>true</testFailureIgnore>
 						</configuration>
@@ -158,27 +157,6 @@
 				<configuration>
 					<source>1.8</source>
 					<target>1.8</target>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-report-plugin</artifactId>
-				<version>3.0.0-M3</version>
-				<executions>
-					<execution>
-						<phase>test</phase>
-						<goals>
-							<goal>report-only</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-site-plugin</artifactId>
-				<version>3.7.1</version>
-				<configuration>
-					<outputDirectory>${basedir}/target/surefire-reports</outputDirectory>
 				</configuration>
 			</plugin>
 		</plugins>
