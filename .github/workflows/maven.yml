@@ -22,3 +22,15 @@ jobs:
         cache: maven
     - name: Test execution
       run: mvn clean test
+    - name: Upload execution report
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: report
+        path: target/report
+    - name: Upload execution logs
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: logs
+        path: target/logs
